@@ -1,0 +1,7 @@
+WebEve.DisableShow: 1
+WebGui.HttpPort:            8899
+
+WebGui.RootUi5Path: /foo/home/alja/root-dev/master/root/ui5/
+
+WebGui.RecordData: 1
+WebGui.JsonComp : 0
