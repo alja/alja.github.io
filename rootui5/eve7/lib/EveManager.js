@@ -742,7 +742,7 @@ sap.ui.define([], function() {
    }
 
    /** used to intercept NewElementPicked for hightlight and selection @private */
-   EveManager.prototype._intercept_NewElementPicked = function(elementId) {
+   EveManager.prototype._intercept_NewElementPicked = function(elementId, multi, sec, secIdx) {
 
       var mirElem = this.GetElement(this._intercept_id);
 
@@ -750,7 +750,7 @@ sap.ui.define([], function() {
           msg2 = { arr: [ JSROOT.extend({UT_PostStream:"UT_Selection_Refresh_State", changeBit: 4}, mirElem) ],
                    header:{ content:"ElementsRepresentaionChanges", fSceneId: mirElem.fSceneId, fTotalBinarySize:0, numRepresentationChanged:1, removedElements:[] }};
 
-      msg2.arr[0].sel_list = elementId ? [{primary: elementId, implied: this.FindElemetsForMaster(elementId, true), sec_idcs:[]}] : [];
+      msg2.arr[0].sel_list = elementId ? [{primary: elementId, implied: this.FindElemetsForMaster(elementId, true), sec_idcs: secIdx ? [secIdx] : []}] : [];
 
       msg2.arr[0].prev_sel_list = undefined;
 
@@ -840,8 +840,10 @@ sap.ui.define([], function() {
       if (mir_call.indexOf("SetMainColorRGB(") == 0)
          mir_call = mir_call.replace(/\(UChar_t\)/g, '');
 
-      var func = new Function('JSROOT.$eve7mir._intercept_' + mir_call);
+      if (mir_call.indexOf("NewElementPicked(") == 0)
+         mir_call = mir_call.replace(/\{|\}/g, '');       
 
+      var func = new Function('JSROOT.$eve7mir._intercept_' + mir_call);
       try {
          func();
       } catch {
