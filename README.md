@@ -1,7 +1,4 @@
-# alja.github.io
-
-These are different test web pages with use of OpenUI
-
+# Offline event display demos
 
 
 [Event demo](calo/)
